@@ -3,14 +3,6 @@ import { voteAction } from './../reducers/anecdoteReducer'
 import { notificationAction } from './../reducers/notificationReducer'
 import PropTypes from 'prop-types'
 
-// { type: 'VOTE', id: anecdote.id }
-/*
-<button onClick={() =>
-                this.context.store.dispatch(voteAction(anecdote.id))
-              }>
-
-*/
-
 
 class AnecdoteList extends React.Component {
 
@@ -38,7 +30,6 @@ class AnecdoteList extends React.Component {
   }
 
   render() {
-    //const anecdotes = this.props.store.getState()
 
     const anecdotesToShow = () => {
       const { anecdotes, filter } = this.context.store.getState()
@@ -46,12 +37,10 @@ class AnecdoteList extends React.Component {
         return anecdotes
       }
 
-      console.log(anecdotes)
       return anecdotes.filter(anec => anec.content.includes(filter))
     }
 
     const anecdotes = anecdotesToShow()
-
 
     return (
       <div>

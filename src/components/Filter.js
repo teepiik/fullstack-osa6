@@ -18,8 +18,6 @@ class Filter extends React.Component {
 
   handleChange = (event) => {
     event.preventDefault()
-    //console.log(event.target.filter.value)
-    console.log(event.target.value)
     this.context.store.dispatch(filterChange(event.target.value))
   }
 
