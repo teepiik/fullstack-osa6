@@ -1,22 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { notificationAction } from '../reducers/notificationReducer'
 
 class Notification extends React.Component {
 
-  componentDidMount() {
-    const { store } = this.context
-    this.unsubscribe = store.subscribe(() =>
-      this.forceUpdate()
-    )
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe()
-  }
-
   render() {
 
-    const { notification } = this.context.store.getState()
+    const notification = this.props.notification
 
     const style = {
       border: 'solid',
@@ -37,8 +27,8 @@ class Notification extends React.Component {
   }
 }
 
-Notification.contextTypes = {
-  store: PropTypes.object
-}
 
-export default Notification
+export default connect(
+  (state) => ({ notification: state.notification }),
+  { notificationAction }
+)(Notification)
