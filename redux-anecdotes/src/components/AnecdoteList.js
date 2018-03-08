@@ -2,11 +2,14 @@ import React from 'react'
 import { voteAction } from './../reducers/anecdoteReducer'
 import { notificationAction } from './../reducers/notificationReducer'
 import { connect } from 'react-redux'
+import anecdoteService from '../services/anecdotes'
 
 
-const handleVote = (event, props, anecdote) => {
+const handleVote = async (event, props, anecdote) => {
+  //const newAnecdote = await anecdoteService.createNew(anec)
 
-  props.voteAction(anecdote.id)
+  const votedAnec = await anecdoteService.updateVote(anecdote)
+  props.voteAction(votedAnec.id)
 
   const notification = `you voted: ${anecdote.content}`
   props.notificationAction(notification)
