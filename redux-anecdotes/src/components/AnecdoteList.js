@@ -2,15 +2,10 @@ import React from 'react'
 import { voteAction } from './../reducers/anecdoteReducer'
 import { notificationAction } from './../reducers/notificationReducer'
 import { connect } from 'react-redux'
-import anecdoteService from '../services/anecdotes'
 
 
 const handleVote = async (event, props, anecdote) => {
-  //const newAnecdote = await anecdoteService.createNew(anec)
-
-  const votedAnec = await anecdoteService.updateVote(anecdote)
-  props.voteAction(votedAnec.id)
-
+  props.voteAction(anecdote)
   const notification = `you voted: ${anecdote.content}`
   props.notificationAction(notification)
 
@@ -18,7 +13,6 @@ const handleVote = async (event, props, anecdote) => {
     props.notificationAction('')
   }, 5000)
 }
-
 
 
 const AnecdoteList = (props) => (
@@ -53,7 +47,6 @@ const mapStateToProps = (state) => {
     anecdotes: anecdotesToShow(state.anecdotes, state.filter)
   }
 }
-
 
 export default connect(
   mapStateToProps,

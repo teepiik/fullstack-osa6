@@ -1,4 +1,4 @@
-
+import anecdoteService from '../services/anecdotes'
 
 const anecdoteReducer = (state = [], action) => {
 
@@ -19,40 +19,34 @@ const anecdoteReducer = (state = [], action) => {
   default:
     return state
   }
-
-  /*
-  if (action.type === 'VOTE') {
-    const old = store.filter(a => a.id !== action.data.id)
-    const voted = store.find(a => a.id === action.data.id)
-
-    return [...old, { ...voted, votes: voted.votes + 1 }]
-  }
-  if (action.type === 'CREATE') {
-
-    return [...store, { content: action.data.content, id: getId(), votes: 0 }]
-  }
-
-  return store*/
 }
 
 export const anecdoteCreation = (data) => {
-  return {
-    type: 'CREATE',
-    data
+  return async (dispatch) => {
+    const newAnec = await anecdoteService.createNew(data)
+    dispatch({
+      type: 'CREATE',
+      data: newAnec
+    })
   }
 }
 
-export const voteAction = (id) => {
-  return {
-    type: 'VOTE',
-    data: { id }
+export const voteAction = (anec) => {
+  return async (dispatch) => {
+    const votedAnec = await anecdoteService.updateVote(anec)
+    dispatch({
+      type: 'VOTE',
+      data: votedAnec })
   }
 }
 
-export const anecdoteInitialization = (data) => {
-  return {
-    type: 'INIT_ANECDOTES',
-    data
+export const anecdoteInitialization = () => {
+  return async (dispatch) => {
+    const anecdotes = await anecdoteService.getAll()
+    dispatch({
+      type: 'INIT_ANECDOTES',
+      data: anecdotes
+    })
   }
 }
 

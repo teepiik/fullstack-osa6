@@ -2,7 +2,6 @@ import React from 'react'
 import { anecdoteCreation } from './../reducers/anecdoteReducer'
 import { notificationAction } from './../reducers/notificationReducer'
 import { connect } from 'react-redux'
-import anecdoteService from '../services/anecdotes'
 
 class AnecdoteForm extends React.Component {
 
@@ -10,11 +9,9 @@ class AnecdoteForm extends React.Component {
     e.preventDefault()
     const anec = e.target.anecdote.value
     e.target.anecdote.value = ''
-    const newAnecdote = await anecdoteService.createNew(anec)
-    this.props.anecdoteCreation(newAnecdote)
+    this.props.anecdoteCreation(anec)
 
     const notification = `you added new anecdote: ${anec}`
-    //
     this.props.notificationAction(notification)
 
     setTimeout(() => {

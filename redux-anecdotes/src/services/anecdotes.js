@@ -17,6 +17,7 @@ const createNew = async (content) => {
 }
 
 const updateVote = async (anecdote) => {
+  console.log(anecdote)
   const votedAnec = {
     id: anecdote.id,
     content: anecdote.content,
