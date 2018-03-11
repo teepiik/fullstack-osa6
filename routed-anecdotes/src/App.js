@@ -1,13 +1,28 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
-const Menu = () => (
-  <div>
-    <Link to="/">anecdotes</Link>&nbsp;
-    <Link to="/create">create new</Link>&nbsp;
-    <Link to="/about">about</Link>&nbsp;
+const Menu = () => {
+  
+  const style = {
+    textAling: 'right',
+    border: 'solid',
+    padding: 10,
+    borderWidth: 8,
+    borderRadius: 5,
+  }
+
+  const linkStyle = {
+    fontSize: 18,
+    margin: 18
+  }
+
+  return(
+  <div style={style}>
+    <Link style={linkStyle} to="/">anecdotes</Link>&nbsp;
+    <Link style={linkStyle} to="/create">create new</Link>&nbsp;
+    <Link style={linkStyle} to="/about">about</Link>&nbsp;
   </div>
-)
+)}
 
 const Anecdote = ({ anecdote }) => {
   return (
@@ -20,21 +35,23 @@ const Anecdote = ({ anecdote }) => {
 
 }
 
-const Notification = () => {
+const Notification = ({notification}) => {
 
   const style = {
     border: 'solid',
     padding: 10,
-    borderWidth: 1
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: 'green'
   }
-  if (this.notification === '' || this.notification === null) { // viittaa stateen, korjaa undefined
+  if (notification === '' || notification === null) {
     return (
-      <div style={null}></div>
+      <div></div>
     )
   } else {
     return (
       <div style={style}>
-        {this.notification}
+        {notification}
       </div>
     )
   }
@@ -89,7 +106,7 @@ class CreateNew extends React.Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  handleSubmit = (e, history) => {
+  handleSubmit = (e) => {
     e.preventDefault()
     this.props.addNew({
       content: this.state.content,
@@ -97,7 +114,7 @@ class CreateNew extends React.Component {
       info: this.state.info,
       votes: 0
     })
-    //history.push('/') ei toimi, history viittaa undefinediin. Jotenkin pass history tänne.
+    this.props.history.push('/') 
   }
 
   render() {
@@ -186,7 +203,7 @@ class App extends React.Component {
           <div>
             <h1>Software anecdotes</h1>
             <Menu />
-            <Notification />
+            <Notification notification={this.state.notification}/>
             <Route exact path="/" render={() => <AnecdoteList anecdotes={this.state.anecdotes} />} />
             <Route exact path="/anecdotes/:id" render={({ match }) => <Anecdote anecdote={this.anecdoteById(match.params.id)} />} />
             <Route path="/about" render={() => <About />} />
